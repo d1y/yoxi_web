@@ -1,24 +1,8 @@
-# yoxi_web
+![](https://cdn.jsdelivr.net/gh/d1y/yoxi_data@master/data/logo.png)
 
-## Project setup
-```
-yarn install
-```
+All resource files come from https://noiz.io
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+online
 
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- https://yoxi.vercel.app
+- http://yoxi.surge.sh
