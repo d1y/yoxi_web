@@ -11,12 +11,12 @@ export const getData = async (): Promise<dataItem[]>=> {
     const { data } = res
     return data.map((item: any)=> {
       // 音量
-      item['volume'] = 1
+      item['volume'] = 0.42
       item['sound_name'] = createURL(`${ item['sound_name'] }.mp3`)
       item['normal_icon'] = createURL(`${ item['normal_icon'] }@2x.png`)
       item['disabled_icon'] = createURL(`${ item['disabled_icon'] }@2x.png`)
       // 开关
-      item['switch'] = true
+      item['switch'] = false
       return item
     })
   } catch (error) {

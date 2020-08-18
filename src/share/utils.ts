@@ -28,3 +28,11 @@ export const changePageTitle = (title: string)=> {
     throw new Error(error)
   }
 }
+
+export const changePageColor = (color: string)=> {
+  try {
+    document.body.style.backgroundColor = color
+  } catch (error) {
+    throw new Error(error)
+  }
+}

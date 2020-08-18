@@ -11,32 +11,67 @@
           </div>
         </li>
       </ul>
+      <button @click="handleClickButton" class="el-button">{{ setttingText }}</button>
     </div>
     <div class="play-ctl">
       <toggle-button v-model="yoxi" color="#36abff"/>
     </div>
+
+    <modal name="my-first-modal">
+      <ul>
+        <li class="list-item list-im">
+          <h2>背景颜色</h2>
+          <div>
+            <v-swatches v-model="bgColor" popover-x="left" swatches="text-advanced"></v-swatches>
+          </div>
+        </li>
+      </ul>
+    </modal>
+
   </div>
 </template>
 
 <script>
 import VueSlider from 'vue-slider-component'
 import 'vue-slider-component/theme/antd.css'
+
+import VSwatches from 'vue-swatches'
+// Import the styles too, typically in App.vue or main.js
+import 'vue-swatches/dist/vue-swatches.css'
+
 import * as assets from '@/share/assets'
 import * as send from '@/share/send'
-import { changePageTitle } from '@/share/utils'
+import { changePageTitle, changePageColor } from '@/share/utils'
+import { setttingText } from '@/share/config'
 export default {
   components: {
-    VueSlider
+    VueSlider,
+    VSwatches
   },
   name: 'App',
   data() {
     return {
       data: null,
       value: 12,
-      yoxi: false
+      yoxi: false,
+    }
+  },
+  computed: {
+    setttingText() {
+      return setttingText
+    },
+    bgColor: {
+      get() {
+        return this.$store.state.bgColor
+      },
+      set(newVal) {
+        this.$store.commit("CHANGE_BACKGROUND_COLOR", newVal)
+      }
     }
   },
   async created() {
+    const color = this.bgColor
+    changePageColor(color)
     changePageTitle('小夕')
     this.data = await this.getData()
   },
@@ -55,6 +90,9 @@ export default {
       } else {
         return cache
       }
+    },
+    handleClickButton() {
+      this.$modal.show('my-first-modal');
     },
     handleChangeVolume(...args) {
       const [ value, index ] = args
@@ -164,12 +202,6 @@ html {
   box-sizing: inherit;
 }
 
-img,
-video {
-  height: auto;
-  max-width: 100%;
-}
-
 iframe {
   border: 0;
 }
@@ -215,7 +247,16 @@ body::before {
   background: rgba(255, 255, 255, .9);
   margin: 0 auto;
   border-radius: 12px;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
+/* Hide scrollbar for Chrome, Safari and Opera */
+.box::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
 .list-item {
   display: flex;
   padding: 18px 24px;
@@ -226,6 +267,7 @@ body::before {
 }
 .list-item img {
   width: 62px;
+  height: 40px;
   padding-right: 24px;
   user-select: none;
 }
@@ -237,13 +279,46 @@ body::before {
   user-select: none;
   pointer-events: none;
 }
+.list-item.list-im {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.vm--overlay {
+  -webkit-backdrop-filter: saturate(180%) blur(5px);
+  backdrop-filter: saturate(180%) blur(5px);
+}
 .play-ctl {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color:rgba(0, 0, 0, .04);
+  /* background-color:rgba(0, 0, 0, .04); */
   width: 100%;
   height: 50px;
   margin-top: 24px;
+}
+.el-button {
+  display: inline-block;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid #dcdfe6;
+  color: #606266;
+  -webkit-appearance: none;
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  margin: 0;
+  transition: .1s;
+  font-weight: 500;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  padding: 8px 24px;
+  font-size: 14px;
+  border-radius: 4px;
+  margin: 12px 0;
 }
 </style>
