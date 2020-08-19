@@ -36,3 +36,13 @@ export const changePageColor = (color: string)=> {
     throw new Error(error)
   }
 }
+
+export const checkDesktop = (): boolean => {
+  try {
+    // just like ?target=desktop
+    const ctx = window.location.search
+    return ctx.indexOf("desktop") >= 0
+  } catch (error) {
+    throw new Error(error)
+  }
+}
